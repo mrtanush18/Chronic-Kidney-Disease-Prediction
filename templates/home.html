@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Placement_Prediction</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+</head>
+
+<style>
+/* Add a black background color to the top navigation */
+.topnav {
+  background-color: #333;
+  overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+  background-color:  rgb(243, 152, 33);;
+  color: white;
+}
+</style>
+
+<style>
+        * {box-sizing:border-box}
+
+            /* Slideshow container */
+            .slideshow-container {
+            max-width: 1000px;
+            position: relative;
+            margin: auto;
+            }
+
+            /* Hide the images by default */
+            .mySlides {
+            display: none;
+            }
+
+            /* Next & previous buttons */
+            .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            margin-top: -22px;
+            padding: 16px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+            }
+
+            /* Position the "next button" to the right */
+            .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+            }
+
+            /* On hover, add a black background color with a little bit see-through */
+            .prev:hover, .next:hover {
+            background-color: rgba(0,0,0,0.8);
+            }
+
+            /* Caption text */
+            .text {
+            color: #f2f2f2;
+            font-size: 15px;
+            padding: 8px 12px;
+            position: absolute;
+            bottom: 8px;
+            width: 100%;
+            text-align: center;
+            }
+
+            /* Number text (1/3 etc) */
+            .numbertext {
+            color: #f2f2f2;
+            font-size: 12px;
+            padding: 8px 12px;
+            position: absolute;
+            top: 0;
+            }
+
+            /* The dots/bullets/indicators */
+            .dot {
+            cursor: pointer;
+            height: 15px;
+            width: 15px;
+            margin: 0 2px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+            }
+
+            .active, .dot:hover {
+            background-color: #717171;
+            }
+
+            /* Fading animation */
+            .fade {
+            -webkit-animation-name: fade;
+            -webkit-animation-duration: 1.5s;
+            animation-name: fade;
+            animation-duration: 1.5s;
+            }
+
+            @-webkit-keyframes fade {
+            from {opacity: .4}
+            to {opacity: 1}
+            }
+
+            @keyframes fade {
+            from {opacity: .4}
+            to {opacity: 1}
+            }
+    </style>
+	
+	<style>
+
+            table {
+                border-collapse: collapse;
+            }
+            th {
+                background-color:green;
+                Color:white;
+            }
+            th, td {
+                width:150px;
+                text-align:center;
+                border:1px solid black;
+                padding:5px
+              
+            }
+            .geeks {
+                border-right:hidden;
+            }
+            .gfg {
+                border-collapse:separate;
+                border-spacing:0 15px;
+            }
+            h1 {
+                color:green;
+            }
+        </style>
+
+
+<script type="text/javascript">
+
+function summarization() {
+
+var text = $("#date").val();
+Medicine_Name="abc";
+var algo='sarima';
+
+
+if (text) {
+  $('#submit-container').hide()
+
+  $(".loader-container").removeClass('display-none');
+  $("#loader").html(
+    "<img src='static/loading.gif' style='width:128px;height:128px;'> ");
+  $.ajax({
+    type : "POST",
+    url : "/predict",
+    data : JSON.stringify({"data":list1}),
+    contentType: "application/json",
+    dataType: 'json'
+  }).done(function(msg) {
+    $(".loader-container").addClass('display-none');
+    if(msg.status_code==400){
+      $("#json").html("");
+    }else{
+      // $("#json").JSONView(msg.body);
+      $("#output").val("");
+      $("#output").val(msg.body);
+    }
+    $('#submit-container').show()
+  }).error(function(msg) {
+    $(".loader-container").addClass('display-none');
+    $("#json").html("");
+    $('#submit-container').show()
+  });
+}
+}
+</script>
+
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<body>
+	<div class="container" >
+			<div class="topnav">
+					<a  href="/home">Home</a>
+					<a class="active" href="/">Predict</a>
+					<a href="/contact">Contact</a>
+					<a href="/about">About</a>
+				  </div>
+		<div class="w3-panel w3-card" style=" padding-top:20px; height: 800px;" align="center">
+			<h1>Chronic Kidney Disease</h1>
+			<hr>
+			<form id="input-form" method="post" action="/" class="form">
+				<div>
+					<div class="row " style="justify-content: center;">
+					<table style="width:100%">
+						<tr>
+				<td>
+					<label for="blood_pressure"> Blood_Pressure:</label>
+				</td>
+				<td>
+					<input type="text" id="bp" name="bp"  placeholder="BP...." class="form-control col col-10">
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					<label for="specific_gravity"> Specific_Gravity:</label>
+				</td>
+				<td>
+					<input type="text" id="sg" name="sg"  placeholder="SG...." class="form-control col col-10">
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					<label for="albumin"> Albumin:</label>
+				</td>
+				<td>
+					<input type="text" id="a" name="a"  placeholder="AL...." class="form-control col col-10">
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					<label for="pus_cell_clumps"> Pus_Cell_Clumps:</label>
+				</td>
+				<td>
+					<input type="text" id="pcc" name="pcc"  placeholder="PCC...." class="form-control col col-10">
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					<label for="blood_glucose_random"> Blood_Glucose_Random:</label>
+				</td>
+				<td>
+          <input type="text" id="bgr" name="bgr"  placeholder="BGR...." class="form-control col col-10">
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					<label for="serum_creatinine"> Serum_Creatinine:</label>
+				</td>
+				<td>
+					<input type="text" id="sc" name="sc" placeholder="SC...." class="form-control col col-10">
+				</td>
+			</tr>
+
+
+			<tr>
+				<td>
+					<label for="packed_cell_volume"> Packed_Cell_Volume:</label>
+				</td>
+				<td>
+					<input type="text" id="pcv" name="pcv" placeholder="PCV...." class="form-control col col-10">
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					<label for="white_blood_cell_count"> White_Blood_Cell_Count:</label>
+				</td>
+				<td>
+					<input type="text" id="wbcc" name="wbcc" placeholder="WBC...." class="form-control col col-10">
+				</td>
+			</tr>
+
+
+
+			<tr>
+				<td>
+					<label for="diabetes_mellitus"> Diabetes_Mellitus:</label>
+				</td>
+				<td>
+					<input type="text" id="dm" name="dm" placeholder="DM...." class="form-control col col-10">
+				</td>
+			</tr>
+
+
+
+			<tr>
+				<td>
+					<label for="appetite"> Appetite:</label>
+				</td>
+				<td>
+          <input type="text" id="ap" name="ap" placeholder="AP...." class="form-control col col-10">
+				</td>
+			</tr>
+
+
+
+			</table>
+          
+					</div>
+					<div class="row" style="padding-top: 20px;justify-content: center;">
+						<input id="submitbutton" class="btn btn-lg btn-primary" type="submit" name="submitbutton" value="Predict" />
+						<!-- <input id="viewbutton" class="btn btn-lg btn-primary" type="submit" name="viewbutton" value="View Reviews"/> -->
+          </div>
+          <div class=" col col-9">
+            <!-- <input type="text" class="form-control col col-10" name="output" method="GET" onclick="summarization()" placeholder="Output" /> -->
+            {% if message %}
+              <p>{{ message }}</p>
+          {% endif %}
+
+          <!-- {% if filename %}
+              <div>
+                <img src="{{ url_for('display_image', filename=filename) }}">
+              </div>
+            {% endif %} -->
+          </div>
+				</div>
+
+			</form>
+		</div>
+	</div>
+
+
+</body>
+</html>
